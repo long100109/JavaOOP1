@@ -1,12 +1,13 @@
-package Slide3Chg4.Sets;
-import java.util.HashSet;
+package Slide3Chg4.Lists;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Scanner;
+
 import Slide3Chg4.Student;
-public class HashSetDemo {
+public class LinkedListDemo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        HashSet<Student> studentsSet = new HashSet<>();
+        LinkedList<Student> studentsSet = new LinkedList<>();
 
         int choice;
         do {
@@ -46,14 +47,14 @@ public class HashSetDemo {
         scanner.close();
     }
 
-    private static void addStudent(HashSet<Student> studentsSet, Scanner scanner) {
+    private static void addStudent(LinkedList<Student> studentsSet, Scanner scanner) {
         Student student = new Student();
         student.inputInfo(scanner);
         studentsSet.add(student);
         System.out.println("Them hoc sinh thanh cong.");
     }
 
-    private static void updateStudent(HashSet<Student> studentsSet, Scanner scanner) {
+    private static void updateStudent(LinkedList<Student> studentsSet, Scanner scanner) {
         System.out.print("Nhap ten hoc sinh can sua: ");
         String fullnameToUpdate = scanner.nextLine();
         
@@ -62,7 +63,7 @@ public class HashSetDemo {
                 System.out.print("Nhap tuoi moi: ");
                 int newAge = scanner.nextInt();
                 scanner.nextLine();
-                student.modifyInfo(newAge);
+                student.modifyInfo( newAge);
                 System.out.println("Cap nhat thong tin thanh cong.");
                 return;
             }
@@ -70,7 +71,7 @@ public class HashSetDemo {
         System.out.println("Khong tim thay hoc sinh co ten '" + fullnameToUpdate + "'.");
     }
 
-    private static void deleteStudent(HashSet<Student> studentsSet, Scanner scanner) {
+    private static void deleteStudent(LinkedList<Student> studentsSet, Scanner scanner) {
         System.out.print("Nhap ten hoc sinh can xoa: ");
         String fullnameToDelete = scanner.nextLine();
     
@@ -90,7 +91,7 @@ public class HashSetDemo {
         }
     }
 
-    private static void displayStudents(HashSet<Student> studentsSet){
+    private static void displayStudents(LinkedList<Student> studentsSet){
     System.out.println("Danh sach hoc sinh: ");
     for (Student students : studentsSet) {
         students.displayInfo();

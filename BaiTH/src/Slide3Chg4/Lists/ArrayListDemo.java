@@ -1,78 +1,104 @@
-package Lists;
-
+package Slide3Chg4.Lists;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
-public class ArrayListDemo extends Student{
+
+import Slide3Chg4.Student;
+public class ArrayListDemo {
+
+
     public static void main(String[] args) {
-    ArrayList<Student>  studentList = new ArrayList<>();
-    Scanner sc = new Scanner(System.in);   
-        boolean isRunning = true;
-        while (isRunning) {
-            System.out.println("Chọn chức năng:");
-            System.out.println("1. Thêm sinh viên");
-            System.out.println("2. Hiển thị danh sách sinh viên");
-            System.out.println("3. Sửa thông tin sinh viên");
-            System.out.println("4. Xoá sinh viên");
-            System.out.println("5. Thoát");
-            int choice = sc.nextInt();
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Student> studentsSet = new ArrayList<>();
+
+        int choice;
+        do {
+            System.out.println("Menu:");
+            System.out.println("1. Them thong tin");
+            System.out.println("2. Sua thong tin");
+            System.out.println("3. Xoa thong tin");
+            System.out.println("4. Hien thi thong tin");
+            System.out.println("0. Thoat");
+
+            System.out.print("Nhap lua chon cua ban: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); 
+
             switch (choice) {
                 case 1:
-                    ThemMoiThongTin();
+                    addStudent(studentsSet, scanner);
                     break;
                 case 2:
-                    HienThiThongTin();
+                    updateStudent(studentsSet, scanner);
                     break;
                 case 3:
-                    SuaThongTint();
+                    deleteStudent(studentsSet, scanner);
                     break;
                 case 4:
-                    XoaThongTin();
+                    displayStudents(studentsSet);
                     break;
-                case 5:
-                    isRunning = false;
+                case 0:
+                    System.out.println("Thoat chuong trinh.");
                     break;
                 default:
-                    System.out.println("Lựa chọn không hợp lệ.");
+                    System.out.println("Lua chon khong hop le.");
+                    break;
             }
-        }
+        } while (choice != 0);
+
+        scanner.close();
     }
 
-    private static void addStudent() {
-        System.out.println("Nhập họ và tên của sinh viên:");
-        String name = scanner.nextLine();
-        System.out.println("Nhập tuổi của sinh viên:");
-        int age = scanner.nextInt();
-        scanner.nextLine(); // Clear buffer
-
-        Student student = new Student(name, age);
-        studentList.add(student);
-        System.out.println("Sinh viên đã được thêm vào danh sách.");
+    private static void addStudent(ArrayList<Student> studentsSet, Scanner scanner) {
+        Student student = new Student();
+        student.inputInfo(scanner);
+        studentsSet.add(student);
+        System.out.println("Them hoc sinh thanh cong.");
     }
 
-    private static void displayStudents() {
-        if (studentList.isEmpty()) {
-            System.out.println("Danh sách sinh viên trống.");
-        } else {
-            System.out.println("Danh sách sinh viên:");
-            for (Student student : studentList) {
-                System.out.println("Họ và tên: " + student.getName() + ", Tuổi: " + student.getAge());
-            }
-        }
-    }
-
-    private static void editStudent() {
-        displayStudents();
-        if (!studentList.isEmpty()) {
-            System.out.println("Nhập số thứ tự của sinh viên bạn muốn sửa:");
-            int index = scanner.nextInt();
-            scanner.nextLine(); // Clear buffer
-
-            if (index >= 0 && index < studentList.size()) {
-                System.out.println("Nhập họ và tên mới của sinh viên:");
-                String newName = scanner.nextLine();
-                System.out.println("Nhập tuổi mới của sinh viên:");
+    private static void updateStudent(ArrayList<Student> studentsSet, Scanner scanner) {
+        System.out.print("Nhap ten hoc sinh can sua: ");
+        String fullnameToUpdate = scanner.nextLine();
+        
+        for (Student student : studentsSet) {
+            if (student.getFullname().equals(fullnameToUpdate)) {
+                System.out.print("Nhap tuoi moi: ");
                 int newAge = scanner.nextInt();
-                scanner.nextLine(); // Clear buffer
+                scanner.nextLine();
+                student.modifyInfo(newAge);
+                System.out.println("Cap nhat thong tin thanh cong.");
+                return;
+            }
+        }
+        System.out.println("Khong tim thay hoc sinh co ten '" + fullnameToUpdate + "'.");
+    }
 
-                studentList.get(i
+    private static void deleteStudent(ArrayList<Student> studentsSet, Scanner scanner) {
+        System.out.print("Nhap ten hoc sinh can xoa: ");
+        String fullnameToDelete = scanner.nextLine();
+    
+        Iterator<Student> iterator = studentsSet.iterator();
+        boolean removed = false;
+        while (iterator.hasNext()) {
+            Student student = iterator.next();
+            if (student.getFullname().equals(fullnameToDelete)) {
+                iterator.remove(); 
+                removed = true;
+                System.out.println("Xoa hoc sinh thanh cong");
+                break;
+            }
+        }
+        if (!removed) {
+            System.out.println("Khong tim thay hoc sinh co ten: " + fullnameToDelete);
+        }
+    }
+
+    private static void displayStudents(ArrayList<Student> studentsSet){
+    System.out.println("Danh sach hoc sinh: ");
+    for (Student student : studentsSet) {
+        student.displayInfo();
+        System.out.println("---------------");
+        }
+    }
 }
+
